@@ -1,0 +1,13 @@
+.GreyChess {
+    height: 50px;
+    width: 50px;
+    background: grey;
+    border-radius: 100px;
+    margin: auto;
+    margin-top: auto;
+    cursor: pointer;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
