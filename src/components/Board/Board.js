@@ -4,6 +4,10 @@ import BlueChess from "../Chess/BlueChess";
 import GreyChess from "../Chess/GreyChess";
 
 export default function Board(props) {
+    useEffect(() => {
+        console.log("[Board] did update");
+    });
+    console.log(props.greyTurn ? "G turn in board" : "B turn in board");
     const boardVisual = props.board.map((row, rowIndex) => {
         return (
             <div className="row">

@@ -10,7 +10,7 @@ export default function GreyChess(props) {
             onClick={() => {
                 if (isMyTurn) {
                     props.click(props.position);
-                }
+                } 
             }}
         ></div>
     );
