@@ -9,7 +9,7 @@ export default function GreyChess(props) {
             className="GreyChess"
             onClick={() => {
                 if (isMyTurn) {
-                    props.click(props.position);
+                    props.click(props.position[0], props.position[1]);
                 } 
             }}
         ></div>

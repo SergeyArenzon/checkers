@@ -1,167 +1,65 @@
-import React, { useEffect, useState } from "react";
+// import React, { Component } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
+import { render } from "@testing-library/react";
+import React, { useState, useEffect } from "react";
 
 export default function Game() {
+    const [board, setBoard] = useState([
+        [null, "B", null, "B", null, "B", null, "B"],
+        ["B", null, "B", null, "B", null, "B", null],
+        [null, "B", null, "B", null, "B", null, "B"],
+        ["X", null, "X", null, "X", null, "X", null],
+        [null, "X", null, "X", null, "X", null, "X"],
+        ["G", null, "G", null, "G", null, "G", null],
+        [null, "G", null, "G", null, "G", null, "G"],
+        ["G", null, "G", null, "G", null, "G", null],
+    ]);
     const [greyTurn, setGreyTurn] = useState(true);
-    const [board, setBoard] = useState([]);
-    const [chess, setChess] = useState(null);
-    const [dest, setDest] = useState(null);
-    const [kill, setKill] = useState(false);
+    const [player, setPlayer] = useState([-1, -1]);
+    const [empty, setEmpty] = useState([-1, -1]);
 
-
-    useEffect(() => {
-        console.log("------------------------start----------------------");
-        console.log("[Game] did update");
-        console.log("chess: " + chess);
-        console.log("dest: " + dest);
-        console.log("greyTurn: " + greyTurn);
-        console.log("------------------------start----------------------");
-
-        setBoard([
-            [null, "B", null, "B", null, "B", null, "B"],
-            ["B", null, "B", null, "B", null, "B", null],
-            [null, "B", null, "B", null, "B", null, "B"],
-            ["X", null, "X", null, "X", null, "X", null],
-            [null, "X", null, "X", null, "X", null, "X"],
-            ["G", null, "G", null, "G", null, "G", null],
-            [null, "G", null, "G", null, "G", null, "G"],
-            ["G", null, "G", null, "G", null, "G", null],
-        ])
-
-    },[]);
-
-    const checkGgoLeft = (curr, dest) => {
-        return curr[0] - 1 === dest[0] && curr[1] - 1 === dest[1];
-    };
-    const checkGgoRight = (curr, dest) => {
-        return curr[0] - 1 === dest[0] && curr[1] + 1 === dest[1];
-    };
-    const checkGgoLeftTwice = (curr, dest) => {
-        return curr[0] - 2 === dest[0] && curr[1] - 2 === dest[1];
-    };
-    const checkGgoRightTwice = (curr, dest) => {
-        return curr[0] - 2 === dest[0] && curr[1] + 2 === dest[1];
+    const checkClicked = (x, y, player) => {
+        return board[x][y] === player;
     };
 
-    const checkBgoLeft = (curr, dest) => {
-        return curr[0] + 1 === dest[0] && curr[1] - 1 === dest[1];
-    };
-    const checkBgoRight = (curr, dest) => {
-        return curr[0] + 1 === dest[0] && curr[1] + 1 === dest[1];
-    };
-    const checkBgoLeftTwice = (curr, dest) => {
-        return curr[0] + 2 === dest[0] && curr[1] - 2 === dest[1];
-    };
-    const checkBgoRightTwice = (curr, dest) => {
-        return curr[0] + 2 === dest[0] && curr[1] + 2 === dest[1];
+    const checkGgoLeft = (x, y) => {
+        return player[0] === x + 1 && player[1] === y + 1;
     };
 
-  
-        if (chess && dest) {
-            if (greyTurn) {
-                //  G turn
-                if (checkGgoLeft(chess, dest)) {
-                    const newBoard = [...board];
-                    newBoard[dest[0]][dest[1]] = "G";
-                    newBoard[chess[0]][chess[1]] = "X";
-                    setGreyTurn(false);
-                    setChess(null);
-                    setDest(null);
-                } else if (checkGgoRight(chess, dest)) {
-                    const newBoard = [...board];
-                    newBoard[dest[0]][dest[1]] = "G";
-                    newBoard[chess[0]][chess[1]] = "X";
-                    setGreyTurn(false);
-                    setChess(null);
-                    setDest(null);
-                } else if (
-                    checkGgoLeftTwice(chess, dest) &&
-                    board[chess[0] - 1][chess[1] - 1] === "B"
-                ) {
-                    const newBoard = [...board];
-                    newBoard[chess[0] - 1][chess[1] - 1] = 'X';
-                    setChess(null);
-                    setDest(null);
-                    newBoard[dest[0]][dest[1]] = "G";
-                    newBoard[chess[0]][chess[1]] = "X";
-
-                } else if (
-                    checkGgoRightTwice(chess, dest) &&
-                    board[chess[0] - 1][chess[1] + 1] === "B"
-                ) {
-                    const newBoard = [...board];
-                    newBoard[chess[0] - 1][chess[1] + 1] = 'X';
-                    setChess(null);
-                    setDest(null);
-                    newBoard[dest[0]][dest[1]] = "G";
-                    newBoard[chess[0]][chess[1]] = "X";
-                }
+    const clickHandler = (x, y) => {
+        let whosTrun = "G";
+        let enemy = "G";
+        if (!greyTurn) {
+            whosTrun = "B";
+            enemy = "G";
+        }
+        if (player[0] === -1 && checkClicked(x, y, whosTrun)) {
+            console.log("first");
+            setPlayer([x, y]);
+        } else if (!checkClicked(x, y, enemy)) {
+            console.log("sec");
+            if (checkGgoLeft(x, y)) {
+                const newBoard = [...board];
+                newBoard[x][y] = whosTrun;
+                newBoard[player[0]][player[1]] = "X";
+                setBoard(newBoard);
                 setGreyTurn(false);
-
-            } else {
-                //  B turn
-                if (checkBgoLeft(chess, dest)) {
-                    const newBoard = [...board];
-                    newBoard[dest[0]][dest[1]] = "B";
-                    newBoard[chess[0]][chess[1]] = "X";
-                    setGreyTurn(true);
-                    setChess(null);
-                    setDest(null);
-                } else if (checkBgoRight(chess, dest)) {
-                    const newBoard = [...board];
-                    newBoard[dest[0]][dest[1]] = "B";
-                    newBoard[chess[0]][chess[1]] = "X";
-                    setGreyTurn(true);
-                    setChess(null);
-                    setDest(null);
-                
-                }
-                else if (
-                    checkBgoLeftTwice(chess, dest) &&
-                    board[chess[0] + 1][chess[1] - 1] === "G"
-                ) {
-                    // const newBoard = [...board];
-                    // newBoard[chess[0] + 1][chess[1] - 1] = 'X';
-                    // setChess(null);
-                    // setDest(null);
-                    // newBoard[dest[0]][dest[1]] = "B";
-                    // newBoard[chess[0]][chess[1]] = "X";
-
-
-                    
-                }
+                setPlayer([-1, -1]);
             }
         } else {
-            //  user didnt chose dest + chess
-            console.log(
-                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-            );
+            // whosTurn chose wrong empty
+            setPlayer([-1, -1]);
         }
-    
+    };
 
-    console.log("---------------end render----------------");
-
-    console.log("[Game] did update");
-    console.log("chess: " + chess);
-    console.log("dest: " + dest);
-    console.log("greyTurn: " + greyTurn);
-    console.log("greyTurn: " + greyTurn);
-
-
-    console.log("---------------end render----------------");
-
-
-       
+    console.log(player);
+    console.log(empty);
+    console.log(greyTurn);
     return (
         <div className="Game">
-            <h1>{greyTurn ? "Grey" : "Blue"}</h1>
-            <Board
-                board={board}
-                chessClick={setChess}
-                distClicked={setDest}
-                greyTurn={greyTurn}
-            />
+            <h1>{greyTurn ? "Grey" : "Blue"} Turn</h1>
+            <Board click={clickHandler} board={board} greyTurn={greyTurn} />
         </div>
     );
 }

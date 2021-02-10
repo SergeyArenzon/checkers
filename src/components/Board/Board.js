@@ -4,25 +4,20 @@ import BlueChess from "../Chess/BlueChess";
 import GreyChess from "../Chess/GreyChess";
 
 export default function Board(props) {
-    useEffect(() => {
-        console.log("[Board] did update");
-    });
+   
 
-
-    console.log(props.greyTurn ? "G turn in board" : "B turn in board");
+    // console.log(props.greyTurn ? "G turn in board" : "B turn in board");
     const boardVisual = props.board.map((row, rowIndex) => {
         return (
             <div className="row">
                 {row.map((cube, colIndex) => {
-                    
                     if (cube) {
-                        
                         if (cube === "G") {
                             return (
                                 <div className="col black">
                                     <GreyChess
                                         position={[rowIndex, colIndex]}
-                                        click={props.chessClick}
+                                        click={props.click}
                                         isMyTurn={props.greyTurn ? true : false}
                                     />
                                 </div>
@@ -32,7 +27,7 @@ export default function Board(props) {
                                 <div className="col black">
                                     <BlueChess
                                         position={[rowIndex, colIndex]}
-                                        click={props.chessClick}
+                                        click={props.click}
                                         isMyTurn={props.greyTurn ? false : true}
                                     />
                                 </div>
@@ -42,7 +37,7 @@ export default function Board(props) {
                                 <div
                                     className="col black"
                                     onClick={() =>
-                                        props.distClicked([rowIndex, colIndex])
+                                        props.click(rowIndex, colIndex)
                                     }
                                 ></div>
                             );
