@@ -4,8 +4,6 @@ import BlueChess from "../Chess/BlueChess";
 import GreyChess from "../Chess/GreyChess";
 
 export default function Board(props) {
-   
-
     // console.log(props.greyTurn ? "G turn in board" : "B turn in board");
     const boardVisual = props.board.map((row, rowIndex) => {
         return (
@@ -19,6 +17,8 @@ export default function Board(props) {
                                         position={[rowIndex, colIndex]}
                                         click={props.click}
                                         isMyTurn={props.greyTurn ? true : false}
+                                        player={props.focused}
+
                                     />
                                 </div>
                             );
@@ -29,6 +29,7 @@ export default function Board(props) {
                                         position={[rowIndex, colIndex]}
                                         click={props.click}
                                         isMyTurn={props.greyTurn ? false : true}
+                                        player={props.focused}
                                     />
                                 </div>
                             );
@@ -50,5 +51,5 @@ export default function Board(props) {
         );
     });
 
-    return <div>{boardVisual}</div>;
+    return <div className="board">{boardVisual}</div>;
 }

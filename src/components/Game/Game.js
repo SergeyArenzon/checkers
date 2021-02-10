@@ -65,7 +65,6 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(false);
             setPlayer([-1, -1]);
-            
         } else {
             // G chose wrong empty
             setPlayer([-1, -1]);
@@ -89,8 +88,7 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
-        } 
-        else if (
+        } else if (
             player[0] === x - 2 &&
             player[1] === y - 2 &&
             board[x - 1][y - 1] === "G"
@@ -116,9 +114,7 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
-            
-        }
-        else {
+        } else {
             // B chose wrong empty
             setPlayer([-1, -1]);
         }
@@ -150,7 +146,12 @@ export default function Game() {
     return (
         <div className="Game">
             <h1>{greyTurn ? "Grey" : "Blue"} Turn</h1>
-            <Board click={clickHandler} board={board} greyTurn={greyTurn} />
+            <Board
+                click={clickHandler}
+                board={board}
+                greyTurn={greyTurn}
+                focused={player}
+            />
         </div>
     );
 }
