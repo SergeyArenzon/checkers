@@ -122,7 +122,7 @@ export default function Game() {
 
     const clickHandler = (x, y) => {
         let whosTrun = "G";
-        let enemy = "G";
+        let enemy = "B";
         if (!greyTurn) {
             whosTrun = "B";
             enemy = "G";
@@ -131,7 +131,6 @@ export default function Game() {
             console.log("first");
             setPlayer([x, y]);
         } else if (!checkClicked(x, y, enemy)) {
-            console.log("sec");
             if (greyTurn) {
                 gMoveHandler(x, y);
             } else {
