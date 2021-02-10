@@ -130,6 +130,8 @@ export default function Game() {
         if (player[0] === -1 && checkClicked(x, y, whosTrun)) {
             console.log("first");
             setPlayer([x, y]);
+        } else if (player[0] != -1 && checkClicked(x, y, whosTrun)) {
+            setPlayer([x, y]);
         } else if (!checkClicked(x, y, enemy)) {
             if (greyTurn) {
                 gMoveHandler(x, y);
