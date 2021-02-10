@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Board.css";
 import BlueChess from "../Chess/BlueChess";
 import GreyChess from "../Chess/GreyChess";

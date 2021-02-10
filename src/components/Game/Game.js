@@ -1,8 +1,7 @@
 // import React, { Component } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
-import { render } from "@testing-library/react";
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 
 export default function Game() {
     const [board, setBoard] = useState([
@@ -17,7 +16,7 @@ export default function Game() {
     ]);
     const [greyTurn, setGreyTurn] = useState(true);
     const [player, setPlayer] = useState([-1, -1]);
-    const [empty, setEmpty] = useState([-1, -1]);
+    // const [empty, setEmpty] = useState([-1, -1]);
 
     const checkClicked = (x, y, player) => {
         return board[x][y] === player;
@@ -27,6 +26,59 @@ export default function Game() {
         return player[0] === x + 1 && player[1] === y + 1;
     };
 
+    const gMoveHandler = (x, y) => {
+        if(player[0] === x + 1 && player[1] === y + 1){
+            // G go left
+            const newBoard = [...board];
+            newBoard[x][y] = 'G';
+            newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(false);
+            setPlayer([-1, -1]);
+
+        }
+        else if (player[0] === x + 1 && player[1] === y - 1){  
+            // G go right
+            const newBoard = [...board];
+            newBoard[x][y] = 'G';
+            newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(false);
+            setPlayer([-1, -1]);
+            
+        }
+        else {
+            // G chose wrong empty
+            setPlayer([-1, -1]);
+        }
+    }
+
+    const bMoveHandler = (x, y) => {
+        if(player[0] === x - 1 && player[1] === y + 1){
+            // B go left
+            const newBoard = [...board];
+            newBoard[x][y] = 'B';
+            newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(true);
+            setPlayer([-1, -1]);
+
+        }
+        else if (player[0] === x - 1 && player[1] === y - 1){  
+            // G go right
+            const newBoard = [...board];
+            newBoard[x][y] = 'B';
+            newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(true);
+            setPlayer([-1, -1]);
+            
+        }
+        else {
+            // B chose wrong empty
+            setPlayer([-1, -1]);
+        }
+    }
   
 
     const clickHandler = (x, y) => {
@@ -41,18 +93,12 @@ export default function Game() {
             setPlayer([x, y]);
         } else if (!checkClicked(x, y, enemy)) {
             console.log("sec");
-            if (checkGgoLeft(x, y)) {
-                const newBoard = [...board];
-                newBoard[x][y] = whosTrun;
-                newBoard[player[0]][player[1]] = "X";
-                setBoard(newBoard);
-                setGreyTurn(false);
-                setPlayer([-1, -1]);
-            } else {
-                // whosTurn chose wrong empty
-                console.log("-------------");
-                setPlayer([-1, -1]);
+            if(greyTurn){
+                gMoveHandler(x, y);
+            }else {
+                bMoveHandler(x, y)
             }
+            
         } else {
 
 
@@ -60,7 +106,6 @@ export default function Game() {
     };
 
     console.log(player);
-    console.log(empty);
     console.log(greyTurn);
     return (
         <div className="Game">
