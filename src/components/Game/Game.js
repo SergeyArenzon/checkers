@@ -23,9 +23,17 @@ export default function Game() {
         return board[x][y] === player;
     };
 
-    const checkGgoLeft = (x, y) => {
-        return player[0] === x + 1 && player[1] === y + 1;
-    };
+
+    const gMoveHandler = (x, y) => {
+        switch (key) {
+            case value:
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
 
     const clickHandler = (x, y) => {
         let whosTrun = "G";
@@ -46,10 +54,14 @@ export default function Game() {
                 setBoard(newBoard);
                 setGreyTurn(false);
                 setPlayer([-1, -1]);
+            } else {
+                // whosTurn chose wrong empty
+                console.log("-------------");
+                setPlayer([-1, -1]);
             }
         } else {
-            // whosTurn chose wrong empty
-            setPlayer([-1, -1]);
+
+
         }
     };
 
