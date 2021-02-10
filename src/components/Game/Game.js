@@ -1,7 +1,7 @@
 // import React, { Component } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 export default function Game() {
     const [board, setBoard] = useState([
@@ -22,53 +22,97 @@ export default function Game() {
         return board[x][y] === player;
     };
 
-    const checkGgoLeft = (x, y) => {
-        return player[0] === x + 1 && player[1] === y + 1;
-    };
-
     const gMoveHandler = (x, y) => {
-        if(player[0] === x + 1 && player[1] === y + 1){
+        if (player[0] === x + 1 && player[1] === y + 1) {
             // G go left
             const newBoard = [...board];
-            newBoard[x][y] = 'G';
+            newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
             setBoard(newBoard);
             setGreyTurn(false);
             setPlayer([-1, -1]);
-
-        }
-        else if (player[0] === x + 1 && player[1] === y - 1){  
+        } else if (player[0] === x + 1 && player[1] === y - 1) {
             // G go right
             const newBoard = [...board];
-            newBoard[x][y] = 'G';
+            newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(false);
+            setPlayer([-1, -1]);
+        } else if (
+            player[0] === x + 2 &&
+            player[1] === y - 2 &&
+            board[x + 1][y - 1] === "B"
+        ) {
+            //  G go right twice and kill
+            const newBoard = [...board];
+            newBoard[x][y] = "G";
+            newBoard[player[0]][player[1]] = "X";
+            newBoard[x + 1][y - 1] = "X";
+            setBoard(newBoard);
+            setGreyTurn(false);
+            setPlayer([-1, -1]);
+        } else if (
+            //  G go left twice and kill
+            player[0] === x + 2 &&
+            player[1] === y + 2 &&
+            board[x + 1][y + 1] === "B"
+        ) {
+            const newBoard = [...board];
+            newBoard[x][y] = "G";
+            newBoard[player[0]][player[1]] = "X";
+            newBoard[x + 1][y + 1] = "X";
             setBoard(newBoard);
             setGreyTurn(false);
             setPlayer([-1, -1]);
             
-        }
-        else {
+        } else {
             // G chose wrong empty
             setPlayer([-1, -1]);
         }
-    }
+    };
 
     const bMoveHandler = (x, y) => {
-        if(player[0] === x - 1 && player[1] === y + 1){
+        if (player[0] === x - 1 && player[1] === y + 1) {
             // B go left
             const newBoard = [...board];
-            newBoard[x][y] = 'B';
+            newBoard[x][y] = "B";
             newBoard[player[0]][player[1]] = "X";
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
-
-        }
-        else if (player[0] === x - 1 && player[1] === y - 1){  
+        } else if (player[0] === x - 1 && player[1] === y - 1) {
             // G go right
             const newBoard = [...board];
-            newBoard[x][y] = 'B';
+            newBoard[x][y] = "B";
             newBoard[player[0]][player[1]] = "X";
+            setBoard(newBoard);
+            setGreyTurn(true);
+            setPlayer([-1, -1]);
+        } 
+        else if (
+            player[0] === x - 2 &&
+            player[1] === y - 2 &&
+            board[x - 1][y - 1] === "G"
+        ) {
+            //  G go right twice and kill
+            const newBoard = [...board];
+            newBoard[x][y] = "B";
+            newBoard[player[0]][player[1]] = "X";
+            newBoard[x - 1][y - 1] = "X";
+            setBoard(newBoard);
+            setGreyTurn(true);
+            setPlayer([-1, -1]);
+        } else if (
+            //  G go left twice and kill
+            player[0] === x - 2 &&
+            player[1] === y + 2 &&
+            board[x - 1][y + 1] === "G"
+        ) {
+            const newBoard = [...board];
+            newBoard[x][y] = "B";
+            newBoard[player[0]][player[1]] = "X";
+            newBoard[x - 1][y + 1] = "X";
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
@@ -78,8 +122,7 @@ export default function Game() {
             // B chose wrong empty
             setPlayer([-1, -1]);
         }
-    }
-  
+    };
 
     const clickHandler = (x, y) => {
         let whosTrun = "G";
@@ -93,15 +136,12 @@ export default function Game() {
             setPlayer([x, y]);
         } else if (!checkClicked(x, y, enemy)) {
             console.log("sec");
-            if(greyTurn){
+            if (greyTurn) {
                 gMoveHandler(x, y);
-            }else {
-                bMoveHandler(x, y)
+            } else {
+                bMoveHandler(x, y);
             }
-            
         } else {
-
-
         }
     };
 
