@@ -1,6 +1,7 @@
 // import React, { Component } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
+import BlueList from '../KilledList/BlueList';
 import React, { useState } from "react";
 
 export default function Game() {
@@ -16,7 +17,9 @@ export default function Game() {
     ]);
     const [greyTurn, setGreyTurn] = useState(true);
     const [player, setPlayer] = useState([-1, -1]);
-    // const [empty, setEmpty] = useState([-1, -1]);
+    const [blueKilled, setBlueKilled] = useState(0);
+    const [greyKilled, setGreyKilled] = useState(0);
+
 
     const checkClicked = (x, y, player) => {
         return board[x][y] === player;
@@ -46,6 +49,7 @@ export default function Game() {
         ) {
             //  G go right twice and kill
             const newBoard = [...board];
+            setBlueKilled(2)
             newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x + 1][y - 1] = "X";
@@ -59,6 +63,7 @@ export default function Game() {
             board[x + 1][y + 1] === "B"
         ) {
             const newBoard = [...board];
+            setBlueKilled(blueKilled + 1)
             newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x + 1][y + 1] = "X";
@@ -102,12 +107,13 @@ export default function Game() {
             setGreyTurn(true);
             setPlayer([-1, -1]);
         } else if (
-            //  G go left twice and kill
+            //  B go left twice and kill
             player[0] === x - 2 &&
             player[1] === y + 2 &&
             board[x - 1][y + 1] === "G"
         ) {
             const newBoard = [...board];
+            // setGreyKilled(greyTurn + 1);
             newBoard[x][y] = "B";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x - 1][y + 1] = "X";
@@ -142,11 +148,11 @@ export default function Game() {
         }
     };
 
-    console.log(player);
-    console.log(greyTurn);
     return (
         <div className="Game">
             <h1>{greyTurn ? "Grey" : "Blue"} Turn</h1>
+            <BlueList number={blueKilled}/>
+            {/* <GreyList number={greyKilled}/> */}
             <Board
                 click={clickHandler}
                 board={board}
