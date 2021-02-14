@@ -1,6 +1,6 @@
 
 
-.chess{
+.blue{
     height: 50px;
     width: 50px;
     border-radius: 100%;
@@ -9,10 +9,16 @@
     margin-top: -20px;
 }
 
-.chess:first-of-type{
+.blue:first-of-type{
     height: 50px;
     width: 50px;
     border-radius: 100%;
     background: blue;
     border: 1px solid black;
+}
+
+.BlueList {
+    min-width: 100px;
+    margin-left: 100px;
+
 }

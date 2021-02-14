@@ -1,7 +1,8 @@
 // import React, { Component } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
-import BlueList from '../KilledList/BlueList';
+import BlueList from "../BlueList/BlueList";
+import GreyList from "../GreyList/GreyList";
 import React, { useState } from "react";
 
 export default function Game() {
@@ -19,7 +20,6 @@ export default function Game() {
     const [player, setPlayer] = useState([-1, -1]);
     const [blueKilled, setBlueKilled] = useState(0);
     const [greyKilled, setGreyKilled] = useState(0);
-
 
     const checkClicked = (x, y, player) => {
         return board[x][y] === player;
@@ -49,7 +49,8 @@ export default function Game() {
         ) {
             //  G go right twice and kill
             const newBoard = [...board];
-            setBlueKilled(2)
+            setBlueKilled(blueKilled + 1);
+
             newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x + 1][y - 1] = "X";
@@ -63,7 +64,7 @@ export default function Game() {
             board[x + 1][y + 1] === "B"
         ) {
             const newBoard = [...board];
-            setBlueKilled(blueKilled + 1)
+            setBlueKilled(blueKilled + 1);
             newBoard[x][y] = "G";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x + 1][y + 1] = "X";
@@ -100,6 +101,8 @@ export default function Game() {
         ) {
             //  G go right twice and kill
             const newBoard = [...board];
+            setGreyKilled(greyKilled + 1);
+
             newBoard[x][y] = "B";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x - 1][y - 1] = "X";
@@ -112,8 +115,9 @@ export default function Game() {
             player[1] === y + 2 &&
             board[x - 1][y + 1] === "G"
         ) {
+            console.log("----------------------------------------------");
             const newBoard = [...board];
-            // setGreyKilled(greyTurn + 1);
+            setGreyKilled(greyKilled + 1);
             newBoard[x][y] = "B";
             newBoard[player[0]][player[1]] = "X";
             newBoard[x - 1][y + 1] = "X";
@@ -148,17 +152,18 @@ export default function Game() {
         }
     };
 
+    console.log(greyKilled);
     return (
         <div className="Game">
-            <h1>{greyTurn ? "Grey" : "Blue"} Turn</h1>
-            <BlueList number={blueKilled}/>
-            {/* <GreyList number={greyKilled}/> */}
+            <GreyList greyKilled={greyKilled} />
+
             <Board
                 click={clickHandler}
                 board={board}
                 greyTurn={greyTurn}
                 focused={player}
             />
+            <BlueList blueKilled={blueKilled} />
         </div>
     );
 }

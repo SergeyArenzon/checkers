@@ -1,0 +1,22 @@
+
+
+.grey{
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background: grey;
+    border: 1px solid black;
+    margin-top: -20px;
+}
+
+.grey:first-of-type{
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background: grey;
+    border: 1px solid black;
+}
+
+.GreyList {
+    margin-right: 100px;
+}
