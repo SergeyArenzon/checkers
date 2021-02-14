@@ -168,32 +168,49 @@ export default function Game() {
         }
     };
 
+    const restartHandle = () => {
+        setBoard([
+            [null, "B", null, "B", null, "B", null, "B"],
+            ["B", null, "B", null, "B", null, "B", null],
+            [null, "B", null, "B", null, "B", null, "B"],
+            ["X", null, "X", null, "X", null, "X", null],
+            [null, "X", null, "X", null, "X", null, "X"],
+            ["G", null, "G", null, "G", null, "G", null],
+            [null, "G", null, "G", null, "G", null, "G"],
+            ["G", null, "G", null, "G", null, "G", null],
+        ]);
+
+        setPlayer([-1, -1]);
+        setBlueKilled(0);
+        setGreyKilled(0);
+        setGameOver(0);
+    };
+
     // CHECK FOR GAME OVER & TURN MANAGMENT TITLE
     let gameManager = null;
     let titleColor = "";
     if (gameOver === 0) {
         if (greyTurn) {
             gameManager = "Grey Turn";
-            titleColor = 'greyTitle';
+            titleColor = "greyTitle";
         } else {
             gameManager = "Blue Turn";
-            titleColor = 'blueTitle';
-
+            titleColor = "blueTitle";
         }
     } else {
         if (gameOver === 1) {
             gameManager = "Grey Won!!!";
-            titleColor = 'greyTitle';
-
+            titleColor = "greyTitle";
         } else {
             gameManager = "Blue Won!!!";
-            titleColor = 'blueTitle';
-
+            titleColor = "blueTitle";
         }
     }
     return (
         <div>
-            <h1 className={["title", titleColor].join(' ') } title>{gameManager}</h1>
+            <h1 className={["title", titleColor].join(" ")} title>
+                {gameManager}
+            </h1>
             <div className="Game">
                 <GreyList greyKilled={greyKilled} />
 
@@ -205,6 +222,7 @@ export default function Game() {
                 />
                 <BlueList blueKilled={blueKilled} />
             </div>
+            <button onClick={restartHandle}>RESTART</button>
         </div>
     );
 }
