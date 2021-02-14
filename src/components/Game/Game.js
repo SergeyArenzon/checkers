@@ -168,6 +168,8 @@ export default function Game() {
         }
     };
 
+
+    //  Handles restart button click
     const restartHandle = () => {
         setBoard([
             [null, "B", null, "B", null, "B", null, "B"],
@@ -184,6 +186,7 @@ export default function Game() {
         setBlueKilled(0);
         setGreyKilled(0);
         setGameOver(0);
+        setGreyTurn(true)
     };
 
     // CHECK FOR GAME OVER & TURN MANAGMENT TITLE
@@ -222,7 +225,7 @@ export default function Game() {
                 />
                 <BlueList blueKilled={blueKilled} />
             </div>
-            <button onClick={restartHandle}>RESTART</button>
+            <button className="restart_btn" onClick={restartHandle}>RESTART</button>
         </div>
     );
 }

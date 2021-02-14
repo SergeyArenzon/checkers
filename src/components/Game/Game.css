@@ -24,3 +24,24 @@ h1 {
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
+
+
+.restart_btn{
+    background: chartreuse;
+    border: 0;
+    padding: 10px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline:none;
+    transition: all 0.2s linear;
+
+}
+.restart_btn:hover{
+    background: green;
+    transition: all 0.2s linear;
+    color: white;
+    font-weight: bold;
+
+
+}
