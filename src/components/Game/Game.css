@@ -5,5 +5,22 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+}
+
+.greyTitle{
+    background-color: grey;
+    transition: background-color 0.5s linear;
+
+}
+.blueTitle{
+    background-color: blue;
+    transition: background-color 0.5s linear;
+    color: white;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }

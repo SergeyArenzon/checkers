@@ -168,28 +168,32 @@ export default function Game() {
         }
     };
 
+    // CHECK FOR GAME OVER & TURN MANAGMENT TITLE
     let gameManager = null;
+    let titleColor = "";
     if (gameOver === 0) {
         if (greyTurn) {
             gameManager = "Grey Turn";
-        }
-        else {
+            titleColor = 'greyTitle';
+        } else {
             gameManager = "Blue Turn";
+            titleColor = 'blueTitle';
 
         }
-    }
-    else {
-        if(gameOver === 1){
-            gameManager='Grey Won!!!';
-        }
-        else{
-            gameManager='Blue Won!!!';
+    } else {
+        if (gameOver === 1) {
+            gameManager = "Grey Won!!!";
+            titleColor = 'greyTitle';
+
+        } else {
+            gameManager = "Blue Won!!!";
+            titleColor = 'blueTitle';
 
         }
     }
     return (
         <div>
-            <h1>{gameManager}</h1>
+            <h1 className={["title", titleColor].join(' ') } title>{gameManager}</h1>
             <div className="Game">
                 <GreyList greyKilled={greyKilled} />
 
