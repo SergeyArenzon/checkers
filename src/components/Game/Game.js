@@ -20,6 +20,7 @@ export default function Game() {
     const [player, setPlayer] = useState([-1, -1]);
     const [blueKilled, setBlueKilled] = useState(0);
     const [greyKilled, setGreyKilled] = useState(0);
+    const [gameOver, setGameOver] = useState(0);
 
     const checkClicked = (x, y, player) => {
         return board[x][y] === player;
@@ -57,6 +58,9 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(false);
             setPlayer([-1, -1]);
+            if (blueKilled === 11) {
+                setGameOver(1);
+            }
         } else if (
             //  G go left twice and kill
             player[0] === x + 2 &&
@@ -71,6 +75,9 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(false);
             setPlayer([-1, -1]);
+            if (blueKilled === 11) {
+                setGameOver(1);
+            }
         } else {
             // G chose wrong empty
             setPlayer([-1, -1]);
@@ -109,6 +116,9 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
+            if (greyKilled === 11) {
+                setGameOver(2);
+            }
         } else if (
             //  B go left twice and kill
             player[0] === x - 2 &&
@@ -124,6 +134,9 @@ export default function Game() {
             setBoard(newBoard);
             setGreyTurn(true);
             setPlayer([-1, -1]);
+            if (greyKilled === 11) {
+                setGameOver(2);
+            }
         } else {
             // B chose wrong empty
             setPlayer([-1, -1]);
@@ -137,33 +150,57 @@ export default function Game() {
             whosTrun = "B";
             enemy = "G";
         }
-        if (player[0] === -1 && checkClicked(x, y, whosTrun)) {
-            console.log("first");
-            setPlayer([x, y]);
-        } else if (player[0] !== -1 && checkClicked(x, y, whosTrun)) {
-            setPlayer([x, y]);
-        } else if (!checkClicked(x, y, enemy)) {
-            if (greyTurn) {
-                gMoveHandler(x, y);
+
+        if (gameOver === 0) {
+            if (player[0] === -1 && checkClicked(x, y, whosTrun)) {
+                console.log("first");
+                setPlayer([x, y]);
+            } else if (player[0] !== -1 && checkClicked(x, y, whosTrun)) {
+                setPlayer([x, y]);
+            } else if (!checkClicked(x, y, enemy)) {
+                if (greyTurn) {
+                    gMoveHandler(x, y);
+                } else {
+                    bMoveHandler(x, y);
+                }
             } else {
-                bMoveHandler(x, y);
             }
-        } else {
         }
     };
 
-    console.log(greyKilled);
-    return (
-        <div className="Game">
-            <GreyList greyKilled={greyKilled} />
+    let gameManager = null;
+    if (gameOver === 0) {
+        if (greyTurn) {
+            gameManager = "Grey Turn";
+        }
+        else {
+            gameManager = "Blue Turn";
 
-            <Board
-                click={clickHandler}
-                board={board}
-                greyTurn={greyTurn}
-                focused={player}
-            />
-            <BlueList blueKilled={blueKilled} />
+        }
+    }
+    else {
+        if(gameOver === 1){
+            gameManager='Grey Won!!!';
+        }
+        else{
+            gameManager='Blue Won!!!';
+
+        }
+    }
+    return (
+        <div>
+            <h1>{gameManager}</h1>
+            <div className="Game">
+                <GreyList greyKilled={greyKilled} />
+
+                <Board
+                    click={clickHandler}
+                    board={board}
+                    greyTurn={greyTurn}
+                    focused={player}
+                />
+                <BlueList blueKilled={blueKilled} />
+            </div>
         </div>
     );
 }
