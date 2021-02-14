@@ -10,6 +10,8 @@
 .greyTitle{
     background-color: grey;
     transition: background-color 0.5s linear;
+    color: white;
+
 
 }
 .blueTitle{

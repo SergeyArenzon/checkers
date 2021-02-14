@@ -4,10 +4,14 @@ import "./FocusedChess.css";
 
 export default function BlueChess(props) {
     const isMyTurn = props.isMyTurn;
-    let style = 'BlueChess';
-    if(props.player[0] === props.position[0] &&  props.player[1] === props.position[1]) {
-        style = 'BlueChess FocusedChess';
+    let style = "BlueChess";
+    if (
+        props.player[0] === props.position[0] &&
+        props.player[1] === props.position[1]
+    ) {
+        style = "BlueChess FocusedChess";
     }
+
 
     return (
         <div
@@ -17,6 +21,8 @@ export default function BlueChess(props) {
                     props.click(props.position[0], props.position[1]);
                 }
             }}
-        ></div>
+        >
+            {props.isQueen ? <div className="crown"></div> : null}
+        </div>
     );
 }

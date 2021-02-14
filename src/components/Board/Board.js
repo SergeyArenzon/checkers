@@ -33,7 +33,9 @@ export default function Board(props) {
                                     />
                                 </div>
                             );
-                        } else {
+                        } else if(cube === "BQ"){}
+                        else if(cube === "GQ"){}
+                        else {
                             return (
                                 <div
                                     className="col black"

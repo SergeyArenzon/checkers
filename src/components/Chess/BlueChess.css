@@ -11,3 +11,12 @@
     transform: translateY(-50%);
 }
 
+.crown {
+    background-image: url('../assets/crown');
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    color: white;
+    background-repeat: no-repeat;
+    background-size: 40px;
+}
